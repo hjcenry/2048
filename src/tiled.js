@@ -34,7 +34,7 @@ var Tiled = cc.Node.extend({
         // 绘制数字
         var labelNum = new cc.LabelTTF();
         labelNum.setString("" + this.num);
-        labelNum.setFontSize(60);
+        labelNum.setFontSize(40);
         // 字体描边效果
         // labelNum.enableStroke(cc.color.BLACK, 0);
         this.addChild(labelNum);
@@ -105,13 +105,18 @@ var Tiled = cc.Node.extend({
     moveTo: function (row, col) {
         this.row = row;
         this.col = col;
-        this.setPositionX((cc.winSize.width - tile.width * 4) / 2 + tile.width * this.col);
-        this.setPositionY((cc.winSize.height - tile.height * 4) / 2 + tile.height * this.row);
+        // this.setPositionX((cc.winSize.width - tile.width * 4) / 2 + tile.width * this.col);
+        // this.setPositionY((cc.winSize.height - tile.height * 4) / 2 + tile.height * this.row);
+        this.stopAllActions();
+        this.runAction(cc.moveTo(0.1, cc.p((cc.winSize.width - tile.width * 4) / 2 + tile.width * this.col, (cc.winSize.height - tile.height * 4) / 2 + tile.height * this.row)));
     },
     newTile: function (row, col) {
+        var self = this;
         this.row = row;
         this.col = col;
         this.setPositionX((cc.winSize.width - tile.width * 4) / 2 + tile.width * this.col);
         this.setPositionY((cc.winSize.height - tile.height * 4) / 2 + tile.height * this.row);
+        this.setScale(0);
+        this.runAction(cc.sequence(cc.scaleTo(0.05, 1)));
     }
 });
